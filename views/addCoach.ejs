@@ -1,0 +1,24 @@
+<% include ./partials/header %>
+<h1>Your Current Coaches</h1>
+<ul>
+    <% currentUser.swimmers.forEach(function(coach){ %>
+        <li><%= coach.firstName %> <%= coach.lastName %></li>
+    <% }) %>
+</ul>
+
+<form action="/addCoach" method="post">
+    <p>Add a coach</p>
+    <div class="form-group row">
+        <div class="col-md-2">
+            <input class="form-control" type="text" placeholder="Coach Username" name="username">
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary">Add</button>
+        </div>
+        
+        
+        
+    </div>
+</form>
+
+<% include ./partials/footer %>

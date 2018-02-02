@@ -1,0 +1,26 @@
+<% include ./partials/header %>
+
+
+<% if (!currentUser.coach){ %>
+    <h1>Your Logs</h1>
+    <a href="/logs/new" class="btn btn-primary" style="margin: 10px">New Log</a>
+    <!--<a href="/addCoach">New Coach</a>-->
+    <% logs.forEach((log) => { %>
+        <a href="/logs/<%= log._id %>" style="text-decoration: none; color: black">
+            <div class="card" style="margin: 10px">
+                <div class="card-body">
+                    <h5 class="card-title"><%= moment(log.date).format('LL') %></h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Created <%= moment(log.created).format('LL') %></h6>
+                </div>
+            </div>
+        </a>
+    <% }) %>
+<% } else { %>
+    <h1>Your Swimmers</h1>
+    <% currentUser.swimmers.forEach((swimmer) => { %>
+        <li><a href="/swimmer/<%= swimmer.id %>/<%= swimmer.username %>/logs"><%= swimmer.firstName %> <%= swimmer.lastName %></a></li>
+    <% }) %>
+    </ul>
+<% } %>
+
+<% include ./partials/footer %>

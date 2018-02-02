@@ -1,0 +1,11 @@
+<% include ./partials/header %>
+
+<h1>The page you are looking for could not be found</h1>
+<% if (!currentUser){ %>
+    <a href="/login">Login</a>
+    <a href="/register">Register</a>
+<% } else { %>
+    <a href="/logs">logs page</a>
+<% } %>
+
+<% include ./partials/footer %>

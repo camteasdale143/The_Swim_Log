@@ -1,0 +1,26 @@
+<% include ./partials/header %>
+
+<h1><%= moment(log.date).format('LL') %></h1>
+<small>Created <%= moment(log.created).format('LL') %></small>
+<% if(currentUser.coach == false){ %>
+<form action="/logs/<%= log._id %>/edit" method="get">
+    <button class="btn btn-warning" style="display:inline-block;">Edit</button>
+</form>
+<form action="/logs/<%= log._id %>?_method=DELETE" method="POST">
+    <button class="btn btn-danger" style="display:inline-block;">Delete</button>
+</form>
+<% } %>
+<hr>
+<h4>Food</h4>
+<p style="overflow-wrap: break-word; white-space: pre-wrap;"><%= log.food %></p>
+<h4>Sleep</h4>
+<p><%= log.sleepHour %> - <%= log.wakeHour %></p>
+<h4>water</h4>
+<p><%= log.water %> cups of water</p>
+<h4>Practice</h4>
+<p style="overflow-wrap: break-word; white-space: pre-wrap;"><%= log.practice %></p>
+<h4>Comments</h4>
+<p style="overflow-wrap: break-word; white-space: pre-wrap;"><%= log.comments %></p>
+
+<a href="/logs">back to logs</a>
+<% include ./partials/footer %>

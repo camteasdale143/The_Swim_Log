@@ -1,0 +1,18 @@
+.formWidth {
+    max-width: 500px;
+    margin: 25px auto;
+}
+
+.radio-label {
+   display: inline-block;
+    vertical-align: top;
+    margin-right: 3%;
+}
+.radio-input {
+   display: inline-block;
+    vertical-align: top;
+}
+
+body {
+    
+}

@@ -1,45 +1,59 @@
 <!DOCTYPE html>
 <html>
     <head>
-          <title>Yelp Camp</title>
+          <title>The Swim Log</title>
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0, maximum-scale=1.0">
           <meta name="mobile-web-app-capable" content="yes">
           <meta name="theme-color" content="#000000">
           
           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
           <link href="/stylesheets/main.css" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
+
+
     </head>
     <body>
-        <% if(currentUser) { %>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a class="navbar-brand" href="/">The Swim Log</a>
+        
+        <nav class="navbar navbar-expand-lg navbar-light ">
+          <a class="navbar-brand link-text" href="/">The Swim Log</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
+              <% if(currentUser) { %>
               <li class="nav-item active">
                 <a class="nav-link" href="/logs">Logs <span class="sr-only">(current)</span></a>
               </li>
               <% if (!currentUser.coach) { %>
-              <li class="nav-item">
-                <a class="nav-link" href="/addCoach">Coaches</a>
-              </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/addCoach">Coaches</a>
+                </li>
+                <% } %>
               <% } %>
             </ul>
             <span class="navbar-text">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                       <a class="nav-link" href="/">signed in as <%= currentUser.username %></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">Logout</a>
-                    </li>
+                    <% if(currentUser) { %>
+                      <li class="nav-item">
+                         <a class="nav-link" href="/">signed in as <%= currentUser.username %></a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="/logout">Logout</a>
+                      </li>
+                    <% } else { %>
+                      <li class="nav-item">
+                           <a class="nav-link link-text" href="/login">LOGIN</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-text" href="/register">SIGN UP</a>
+                        </li>
+                    <% } %>
                 </ul>
             </span>
           </div>
         </nav>
-        <% } %>
+        
 
         <div class="container">
             

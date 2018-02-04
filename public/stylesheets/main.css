@@ -1,3 +1,7 @@
+body {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
 .formWidth {
     max-width: 500px;
     margin: 25px auto;
@@ -13,6 +17,117 @@
     vertical-align: top;
 }
 
-body {
-    
+.username-good:focus{
+    border-color: #2ecc71;
+    background-color: #edfff4;
+}
+
+.username-taken:focus {
+    border-color: #e74c3c;
+    background-color: #ffdedb;
+}
+
+.username-good {
+    border-color: #2ecc71;
+    background-color: #edfff4;
+}
+
+.username-taken {
+    border-color: #e74c3c;
+    background-color: #ffdedb;
+}
+
+.username-sub-not-taken {
+    color: #2ecc71;
+}
+
+.username-sub-taken {
+    color: #e74c3c;
+}
+
+.searchBox:hover {
+    background-color: #ecf0f1;
+    cursor: pointer;
+}
+
+
+.titleimg {
+    padding-top: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 300px;
+    min-width: 100px;
+}
+
+.swim-icon {
+    width: 70px;
+}
+
+.padded-title {
+    padding-top: 50px;
+    color: #34495e;
+}
+
+.padded-text {
+    max-width: 65%;
+    color: #34495e;
+    display: block;
+    margin: 0px auto;
+}
+
+.link-text {
+    letter-spacing: 3px;
+    text-decoration: none;
+}
+
+.link-text:hover {
+    letter-spacing: 3px;
+    text-decoration: none;
+}
+
+.link-colour {
+    color:#bdc3c7;
+}
+
+.link-colour:hover {
+    color:#95a5a6;
+}
+
+
+.small-hr {
+    width: 300px;
+}
+
+.sqrbtn {
+    background-color: #34495e;
+    color: white;
+    display: block;
+    margin: 40px auto;
+}
+
+
+.sqrbtn:hover {
+    background-color: #262626;
+    cursor: pointer;
+}
+
+.anmated-btn {
+    transition: 1s ease-in-out;
+}
+
+.text-input {
+    border: 0px #262626 solid;
+    border-bottom-width: 1px;
+    border-radius: 0;
+    box-shadow: 0px 0px 0px 0px;
+    outline: 0 none;
+}
+
+.text-input:focus {
+    border: 0px #262626 solid;
+    border-bottom-width: 1px;
+    border-radius: 0;
+    box-shadow: 0px 0px 0px 0px;
+    outline: 0 none;
 }

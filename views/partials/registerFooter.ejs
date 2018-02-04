@@ -1,0 +1,53 @@
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js">
+        
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            var usernameForm = $('#username')
+            var usernameSub = $('#username-sub-text');
+            var submitButton = $('#formButton');
+            usernameForm.bind('input', function(){
+                var username = $("#username").val();
+                if (username.length > 2) {
+                    $.ajax({
+                        method:"GET",
+                        url:"/api/usernameTaken/" + username
+                    }).done((data) => {
+                        if (data) {
+                            // USERNAME TAKEN
+                            setInvalidUsername("Username unavailable")
+                        }
+                        else {
+                            // USERNAME NOT TAKEN
+                            setValidUsername("Username available");
+                        }
+                        
+                    })
+                } else {
+                    // USERNAME TOO SHORT
+                    setInvalidUsername("Username must be at least 3 characters");
+                }
+                
+                function setInvalidUsername(message) {
+                    usernameForm.addClass("username-taken")
+                    usernameForm.removeClass("username-good")
+                    usernameSub.html('<small class="username-sub-taken">'+ message +'</small>')
+                    submitButton.html('<button class="btn btn-large btn-default btn-block btn-primary" disabled>Sign Up</button>');
+                }
+                
+                function setValidUsername(message) {
+                    usernameForm.addClass("username-good")
+                    usernameForm.removeClass("username-taken")
+                    usernameSub.html('<small class="username-sub-not-taken">' + message + '</small>')
+                    submitButton.html('<button class="btn btn-large btn-default btn-block btn-primary">Sign Up</button>');
+                }
+            });
+        });
+    </script>
+    </body>
+</html>

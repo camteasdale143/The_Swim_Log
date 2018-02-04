@@ -8,8 +8,8 @@ router.get("/addCoach", middleware.isLoggedIn, (req, res) => {
     res.render("addCoach")
 })
 
-router.post("/addCoach", middleware.isLoggedIn, (req, res) => {
-    db.User.findOne({username:req.body.username})
+router.post("/addCoach/:username", middleware.isLoggedIn, (req, res) => {
+    db.User.findOne({username:req.params.username})
     .then((foundCoach) => {
         if (foundCoach.coach){
             var copy = false;
@@ -63,5 +63,14 @@ router.get("/swimmer/:id/:username/logs", middleware.isLoggedIn, (req, res) => {
         res.redirect("back")
     })
 })
+
+router.get("/api/coacheswithusername/:username", (req, res) => {
+
+    db.User.find({ coach: true, $or: [{username: { $regex: req.params.username}}, {firstName: { $regex: req.params.username}}, {lastName: { $regex: req.params.username}} ] } ).limit(5)
+    .then((foundUsers) => {
+        res.send(foundUsers)
+    })
+}) 
+
 
 module.exports = router;

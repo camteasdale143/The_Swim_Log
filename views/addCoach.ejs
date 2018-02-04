@@ -6,19 +6,21 @@
     <% }) %>
 </ul>
 
-<form action="/addCoach" method="post">
-    <p>Add a coach</p>
-    <div class="form-group row">
-        <div class="col-md-2">
-            <input class="form-control" type="text" placeholder="Coach Username" name="username">
-        </div>
-        <div class="col-md-2">
-            <button class="btn btn-primary">Add</button>
-        </div>
+<!--<form action="/addCoach" method="post">-->
+    <p>Find Your Coach</p>
+    <div class="form-group">
+
+            <input id="coach-Username" class="form-control" type="text" placeholder="Coach Name" name="username">
+            <div id="coach-sub-text">
+                
+            </div>
+            <div id="found-coaches">
+                
+            </div>
         
         
         
     </div>
-</form>
+<!--</form>-->
 
-<% include ./partials/footer %>
+<% include ./partials/addCoachfooter %>

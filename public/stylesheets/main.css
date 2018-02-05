@@ -14,36 +14,33 @@ body {
 }
 .radio-input {
    display: inline-block;
-    vertical-align: top;
+   width: 100px;
+}
+
+.radio-form {
+    margin-left: 28%;
+}
+
+.radio-input input:checked{
+    background-color: orange;
 }
 
 .username-good:focus{
-    border-color: #2ecc71;
-    background-color: #edfff4;
-}
-
-.username-taken:focus {
-    border-color: #e74c3c;
-    background-color: #ffdedb;
-}
-
-.username-good {
-    border-color: #2ecc71;
-    background-color: #edfff4;
-}
-
-.username-taken {
-    border-color: #e74c3c;
-    background-color: #ffdedb;
-}
-
-.username-sub-not-taken {
     color: #2ecc71;
 }
 
-.username-sub-taken {
+.username-taken:focus {
     color: #e74c3c;
 }
+
+.username-good {
+    color: #2ecc71;
+}
+
+.username-taken {
+    color: #e74c3c;
+}
+
 
 .searchBox:hover {
     background-color: #ecf0f1;
@@ -112,16 +109,24 @@ body {
     cursor: pointer;
 }
 
+.sqrbtn:disabled {
+    background-color: #262626;
+    color: #bdc3c7;
+    display: block;
+    margin: 40px auto;
+}
 .anmated-btn {
-    transition: 1s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 .text-input {
     border: 0px #262626 solid;
     border-bottom-width: 1px;
     border-radius: 0;
+    border-color: #34495e;
     box-shadow: 0px 0px 0px 0px;
     outline: 0 none;
+    padding-bottom: -100px;
 }
 
 .text-input:focus {
@@ -130,4 +135,57 @@ body {
     border-radius: 0;
     box-shadow: 0px 0px 0px 0px;
     outline: 0 none;
+}
+.page-header {
+    letter-spacing: 12px;
+    text-decoration: none;
+    color: #34495e;
+}
+.hr-header {
+    width: 200px;
+    padding-bottom: 20px;
+}
+#coachButton {
+    background-color:red;
+    color: blue;
+}
+
+.log-icon {
+    display: inline-block;
+}
+
+.log-icon-color {
+    color: #7f7f7f;
+}
+.log-icon-color:hover {
+    color: #34495e;
+}
+.animated-icon {
+    transition: 0.3s ease-in-out;
+}
+
+#home-icon {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+#plus-icon {
+    width: 35px !important;
+    height: 35px !important;
+    margin: 0px 20px 5px 20px;
+}
+
+#search-icon {
+    width: 35px !important;
+    height: 35px !important;
+    margin-bottom: 5px;
+}
+
+.ellipsis-pull {
+    float: right;
+}
+
+.ellipsis-a {
+    text-decoration: none;
+    color: #7f7f7f;
 }

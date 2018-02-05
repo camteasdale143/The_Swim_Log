@@ -1,15 +1,14 @@
 <% include ./partials/header %>
 
-    <img src="../images/swimLog.png" class="titleimg">
-
-<% if (!currentUser){ %>
-
-<% } else { %>
-    <a href="/logs">Logs</a>
-<% } %>
-<% include ./partials/footer %>
+<img src="../images/swimLog.png" class="titleimg">
 
 <h1 class="text-center padded-title">Become Your Best</h1>
 <hr class="small-hr">
 <p class="text-center padded-text">Welcome to the swim log, this is web app designed for swimmers and coaches to keep track of their own habits and routines to become they best swimmers posssible.</p>
-<a href="/register" class="link-text"><button class="sqrbtn anmated-btn" style="width: 300px; height: 50px;">SIGN UP</button></a>
+<% if (!currentUser){ %>
+    <a href="/register" class="link-text"><button class="sqrbtn anmated-btn" style="width: 300px; height: 50px;">SIGN UP</button></a>
+<% } else { %>
+    <a href="/logs" class="link-text"><button class="sqrbtn anmated-btn" style="width: 300px; height: 50px;">LOG</button></a>
+<% } %>
+
+<% include ./partials/footer %>

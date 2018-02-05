@@ -36,15 +36,15 @@
                 function setInvalidUsername(message) {
                     usernameForm.addClass("username-taken")
                     usernameForm.removeClass("username-good")
-                    usernameSub.html('<small class="username-sub-taken">'+ message +'</small>')
-                    submitButton.html('<button class="btn btn-large btn-default btn-block btn-primary" disabled>Sign Up</button>');
+                    usernameSub.html('<small class="username-taken">'+ message +'</small>')
+                    submitButton.html('<button class="btn-block sqrbtn anmated-btn" style="height: 45px" disabled>Sign Up</button>');
                 }
                 
                 function setValidUsername(message) {
                     usernameForm.addClass("username-good")
                     usernameForm.removeClass("username-taken")
-                    usernameSub.html('<small class="username-sub-not-taken">' + message + '</small>')
-                    submitButton.html('<button class="btn btn-large btn-default btn-block btn-primary">Sign Up</button>');
+                    usernameSub.html('<small class="username-good">' + message + '</small>')
+                    submitButton.html('<button class="btn-block sqrbtn anmated-btn" style="height: 45px">Sign Up</button>');
                 }
             });
         });

@@ -2,19 +2,43 @@
 
 
 <% if (!currentUser.coach){ %>
-    <h1>Your Logs</h1>
-    <a href="/logs/new" class="btn btn-primary" style="margin: 10px">New Log</a>
+    <div class="text-center" style="margin-top: 25px">
+        <a href="/logs" class="log-icon-color animated-icon"><i class="fas fa-home log-icon" id="home-icon" style="color:#34495e;"></i></a>
+        <a href="/logs/new" class="log-icon-color animated-icon"><i class="fas fa-plus log-icon" id="plus-icon"></i></a>
+        <a href="/logs" class="log-icon-color animated-icon"><i class="fas fa-search log-icon" id="search-icon"></i></a>
+    </div>
+    
+    
+    <h3 class="text-center page-header" style="padding-top: 20px">YOUR LOGS</h3>
+    <hr class="hr-header">
     <!--<a href="/addCoach">New Coach</a>-->
-    <% logs.forEach((log) => { %>
-        <a href="/logs/<%= log._id %>" style="text-decoration: none; color: black">
-            <div class="card" style="margin: 10px">
-                <div class="card-body">
-                    <h5 class="card-title"><%= moment(log.date).format('LL') %></h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Created <%= moment(log.created).format('LL') %></h6>
-                </div>
+    <div class="row">
+        <% logs.forEach((log) => { %>
+            <div class="col-md-4">
+                <a href="/logs/<%= log._id %>" style="text-decoration: none; color: black">
+                    <div class="card" style="margin: 10px">
+                        <div class="card-body">
+                            
+                            <div class="dropdown show ellipsis-pull">
+                              <a class="ellipsis-a" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v"></i>
+                              </a>
+                            
+                              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="/logs/<%= log._id %>">VIEW</a>
+                                <a class="dropdown-item" href="/logs/<%= log._id %>/edit">EDIT</a>
+                                <a class="dropdown-item" href="#">DELETE</a>
+                              </div>
+                            </div>
+                            
+                            <h5 class="card-title"><%= moment(log.date).format('LL') %></h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Created <%= moment(log.created).format('LL') %></h6>
+                        </div>
+                    </div>
+                </a>
             </div>
-        </a>
-    <% }) %>
+        <% }) %>
+    </div>
 <% } else { %>
     <h1>Your Swimmers</h1>
     <% currentUser.swimmers.forEach((swimmer) => { %>

@@ -136,6 +136,22 @@ body {
     box-shadow: 0px 0px 0px 0px;
     outline: 0 none;
 }
+
+.text-area {
+    border: 1px #262626 solid;
+    border-radius: 0;
+    border-color: #34495e;
+    box-shadow: 0px 0px 0px 0px;
+    outline: 0 none;
+    padding-bottom: -100px;
+}
+
+.text-area:focus {
+    border: 1px #262626 solid;
+    border-radius: 0;
+    box-shadow: 0px 0px 0px 0px;
+    outline: 0 none;
+}
 .page-header {
     letter-spacing: 12px;
     text-decoration: none;
@@ -187,5 +203,15 @@ body {
 
 .ellipsis-a {
     text-decoration: none;
+    color: #7f7f7f;
+}
+
+
+.log-title {
+    margin-left: 50px;
+    color: #34495e;
+}
+
+.log-text {
     color: #7f7f7f;
 }

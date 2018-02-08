@@ -15,7 +15,10 @@ router.get("/", middleware.isLoggedIn, (req,res) => {
     })
   }
   else {
-    res.render("index")
+    db.User.find({team: {id: req.user.team.id}, coach: false})
+    .then((foundSwimmers) => {
+      res.render("coach-player-index", {swimmers: foundSwimmers})
+    })
   }
 })
 

@@ -1,6 +1,11 @@
-<h1>Create A New Team</h1>
-<form action="/team" method="post">
-    <input type="text" placeholder="Team Name" name="teamName">
-    <input type="text" placeholder="Password" name="teamPassword">
-    <button>Create Team</button>
+<% include ./partials/header %>
+    
+<h1 class="text-center padded-title">Create A New Team</h1>
+<form action="/team/new" method="post">
+    <div class="form-group" style="text-align:center">
+        <input class="text-input" style="margin-top: 20px" type="text" placeholder="Team Name" name="teamName">
+    </div>
+    <button class="sqrbtn anmated-btn" style="margin-top: 20px; width: 300px; height: 50px;">Create Team</button>
+    <div class="text-center" style="margin-top: -30px;"><a href="/team/join" class="link-text link-colour" style="padding-right: 190px;">Join team</a></div>
 </form>
+<% include ./partials/footer %>

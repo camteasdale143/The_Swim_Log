@@ -1,5 +1,4 @@
 var mongoose = require("mongoose")
-var passportLocalMongoose = require("passport-local-mongoose");
 
 var teamSchema = new mongoose.Schema({
     name: String,
@@ -10,14 +9,15 @@ var teamSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "User"
             },
-            firstName: String,
-            lastName: String,
-            username: String
-            
         }
-    ]
+    ],
+    admin: {
+                id: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "User"
+                },
+            }
 })
 
-teamSchema.plugin(passportLocalMongoose);
 var Team = mongoose.model('Team', teamSchema);
 module.exports = Team;

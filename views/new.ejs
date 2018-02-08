@@ -1,38 +1,44 @@
 <% include ./partials/header %>
-
-<h1>New Log</h1>
+<div class="text-center" style="margin-top: 25px; margin-bottom: 30px">
+    <a href="/logs" class="log-icon-color animated-icon"><i class="fas fa-home log-icon" id="home-icon"></i></a>
+    <a href="/logs/new" class="log-icon-color animated-icon"><i class="fas fa-plus log-icon" id="plus-icon" style="color:#34495e;"></i></a>
+    <a href="/logs" class="log-icon-color animated-icon"><i class="fas fa-search log-icon" id="search-icon"></i></a>
+</div>
+    
+<h1 class="log-title text-center" style="margin-left:0px;">New Log</h1>
+<hr class="hr-header">
 <form action="/logs" method="POST">
     <div class="form-group">
-        <input class="form-control" type="date" name="date" value="<%= moment(Date.now()).format('YYYY-MM-DD') %>" required>
+        <input class="form-control text-input" type="date" name="date" value="<%= moment.tz(Date.now(), "America/Toronto").format('YYYY-MM-DD') %>" required>
     </div>
     <div class="form-group">
         <label>Todays Meals</label>
-        <textarea rows="10" class="form-control" name="food" placeholder="food" required></textarea>
+        <textarea rows="10" class="form-control text-area" name="food" placeholder="food" required></textarea>
     </div>
     <div class="form-group row">
         <div class="col-md-6">
             <label>Sleep Hour</label>
-            <input class="form-control" type="text" name="sleepHour" placeholder="sleepHour" value ="21:00" required >
+            <input class="form-control text-input" type="text" name="sleepHour" placeholder="9:30 pm" required >
         </div>
         <div class="col-md-6">
             <label>Wake Hour</label>
-            <input class="form-control" type="text" name="wakeHour" placeholder="wakeHour" value ="06:00" required>
+            <input class="form-control text-input" type="text" name="wakeHour" placeholder="5:45 am" required>
         </div>
     </div>
     <div class="form-group">
         <label for="">Cups of water</label>
-        <input class="form-control"type="number" name="water" placeholder="4" required>
+        <input class="form-control text-input"type="number" name="water" placeholder="4" required>
     </div>
     <div class="form-group">
         <label>Practice</label>
-        <textarea  rows="10" class="form-control" name="practice" placeholder="practice" required></textarea>
+        <textarea  rows="10" class="form-control text-area" name="practice" placeholder="practice" required></textarea>
     </div>
     <div class="form-group">
         <label>Comments</label>
-        <textarea rows="10" class="form-control" name="comments" placeholder="comments" required></textarea>
+        <textarea rows="10" class="form-control text-area" name="comments" placeholder="comments" required></textarea>
     </div>
     <div class="form-group">
-        <button class="btn btn-large btn-default btn-block btn-primary">Create Log</button>
+        <button class="btn-block sqrbtn anmated-btn" style="height: 45px">Create Log</button>
     </div>
 </form>
 

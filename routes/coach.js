@@ -65,8 +65,9 @@ router.get("/swimmer/:id/:username/logs", middleware.isLoggedIn, (req, res) => {
 })
 
 router.get("/api/coacheswithusername/:username", (req, res) => {
-
-    db.User.find({ coach: true, $or: [{username: { $regex: req.params.username}}, {firstName: { $regex: req.params.username}}, {lastName: { $regex: req.params.username}} ] } ).limit(5)
+    var userSearch = req.params.username.split(" ");
+    console.log(userSearch);
+    db.User.find({ coach: true, $or: [{username: { $regex: req.params.username}}, {firstName: { $regex: /^req.params.username$/i}}, {lastName: { $regex: /^req.params.username$/i}} ] } ).limit(5)
     .then((foundUsers) => {
         res.send(foundUsers)
     })

@@ -1,26 +1,32 @@
 <% include ./partials/header %>
 
-<h1><%= moment(log.date).format('LL') %></h1>
-<small>Created <%= moment(log.created).format('LL') %></small>
 <% if(currentUser.coach == false){ %>
-<form action="/logs/<%= log._id %>/edit" method="get">
-    <button class="btn btn-warning" style="display:inline-block;">Edit</button>
-</form>
-<form action="/logs/<%= log._id %>?_method=DELETE" method="POST">
-    <button class="btn btn-danger" style="display:inline-block;">Delete</button>
-</form>
+<div class="dropdown show ellipsis-pull">
+  <a class="ellipsis-a" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-cog"></i>
+  </a>
+
+  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="/logs/<%= log._id %>/edit">EDIT</a>
+    <form action="/logs/<%= log._id %>?_method=DELETE" method="POST">
+        <button class="dropdown-item" style="">DELETE</button>
+    </form>
+  </div>
+</div>
 <% } %>
+<h1 class="text-center page-header"><%= moment(log.date).format('LL') %></h1>
+<p class="text-center log-text">Created <%= moment.tz(log.created, "America/Toronto").format('LL') %></p>
 <hr>
-<h4>Food</h4>
-<p style="overflow-wrap: break-word; white-space: pre-wrap;"><%= log.food %></p>
-<h4>Sleep</h4>
-<p><%= log.sleepHour %> - <%= log.wakeHour %></p>
-<h4>water</h4>
-<p><%= log.water %> cups of water</p>
-<h4>Practice</h4>
-<p style="overflow-wrap: break-word; white-space: pre-wrap;"><%= log.practice %></p>
-<h4>Comments</h4>
-<p style="overflow-wrap: break-word; white-space: pre-wrap;"><%= log.comments %></p>
+<h4 class="log-title">Food</h4>
+<p style="overflow-wrap: break-word; white-space: pre-wrap;" class="log-text"><%= log.food %></p>
+<h4 class="log-title">Sleep</h4>
+<p class="log-text"><%= log.sleepHour %> - <%= log.wakeHour %></p>
+<h4 class="log-title">water</h4>
+<p class="log-text"><%= log.water %> cups of water</p>
+<h4 class="log-title">Practice</h4>
+<p style="overflow-wrap: break-word; white-space: pre-wrap;" class="log-text"><%= log.practice %></p>
+<h4 class="log-title">Comments</h4>
+<p style="overflow-wrap: break-word; white-space: pre-wrap;" class="log-text"><%= log.comments %></p>
 
 <a href="/logs">back to logs</a>
 <% include ./partials/footer %>

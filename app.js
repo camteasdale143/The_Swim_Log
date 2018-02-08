@@ -11,6 +11,7 @@ var mongoose = require("mongoose")
 var logRoutes = require("./routes/logs")
 var authRoutes = require("./routes/auth")
 var coachRoutes = require("./routes/coach")
+var teamRoutes = require("./routes/team")
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -37,6 +38,7 @@ app.use(function(req,res,next){
 })
 
 app.locals.moment = require("moment");
+app.locals.moment = require("moment-timezone");
 
 
 
@@ -47,6 +49,7 @@ app.get("/", (req,res) => {
 
 app.use(authRoutes);
 app.use("/logs", logRoutes);
+app.use("/team", teamRoutes);
 app.use(coachRoutes);
 
 

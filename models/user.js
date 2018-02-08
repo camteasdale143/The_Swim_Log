@@ -21,7 +21,13 @@ var userSchema = new mongoose.Schema({
             username: String
         }
     ],
-    
+    team: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: "Team"
+        },
+    },
+
 })
 
 

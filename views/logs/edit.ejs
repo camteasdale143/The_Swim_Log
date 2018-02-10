@@ -1,4 +1,4 @@
-<% include ./partials/header %>
+<% include ../partials/header %>
 
      <h1>Edit <%= moment(log.date).format("LL") %> Log</h1>
 <form action="/logs/<%= log._id %>?_method=PUT" method="POST">
@@ -38,4 +38,4 @@
     </div>
 </form>
 
-<% include ./partials/footer %>
+<% include ../partials/footer %>

@@ -5,11 +5,10 @@ var db = require("../models/index");
 
 
 router.get("/register", (req, res) => {
-    res.render("register");
+    res.render("auth/register", {page:"register"});
 });
 
 router.post("/register", (req, res) => {
-    console.log(req.body.coach);
     var newUser = {username: req.body.username, firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email, coach: req.body.coach}
     var userPassword = req.body.password
     db.User.findOne({username: req.body.username})
@@ -33,7 +32,7 @@ router.post("/register", (req, res) => {
 
 })
 router.get("/login", (req, res) => {
-    res.render("login");
+    res.render("auth/login", {page:"login"});
 });
 
 router.post("/login", passport.authenticate("local", {
@@ -43,6 +42,7 @@ router.post("/login", passport.authenticate("local", {
 
 router.get("/logout", (req, res) => {
     req.logout();
+    req.flash("success", "Successfully Logged Out");
     res.redirect("/")
 })
 

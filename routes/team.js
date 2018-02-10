@@ -5,7 +5,7 @@ var mongoose = require("mongoose");
 var middleware = require("../middleware/index")
 
 router.get("/new", middleware.isLoggedIn, (req, res) => {
-    res.render("newTeam");
+    res.render("team/newTeam", {page: "team"});
 })
 
 router.post("/new", middleware.isLoggedIn, (req, res) => {
@@ -44,15 +44,13 @@ router.get("/", middleware.isLoggedIn, (req, res) => {
                     db.User.findById(member.id)
                     .then((member) => {
                         memberList.push(member);
-                        console.log(memberList)
                         if(memberList.length == foundTeam.members.length) {
-                            res.render("team", {team: foundTeam, members: memberList});
+                            res.render("team/team", {team: foundTeam, members: memberList});
                         }
                     })
                 })
             }
             else {
-                console.log(foundTeam);
                 res.redirect("back")
             }
         })
@@ -63,7 +61,7 @@ router.get("/", middleware.isLoggedIn, (req, res) => {
 })
 
 router.get("/join", middleware.isLoggedIn, (req, res) => {
-    res.render("noTeam");
+    res.render("team/noTeam", {page: "team"});
 })
 
 router.post("/join", middleware.isLoggedIn, (req, res) => {
@@ -71,7 +69,6 @@ router.post("/join", middleware.isLoggedIn, (req, res) => {
     .then((foundTeam) => {
             var copy = false;
             foundTeam.members.forEach(function(member){
-                console.log(member.id + " - " + req.user._id)
                 if (member.id.equals(req.user._id)){
                     copy = true;
                 }
@@ -85,8 +82,6 @@ router.post("/join", middleware.isLoggedIn, (req, res) => {
                     var newSwimmer = {id:req.user._id}
                     foundTeam.members.push(newSwimmer);
                     foundTeam.save();
-                    console.log(foundTeam);
-                    console.log(self);
                     res.redirect("/team");
                 })
             }

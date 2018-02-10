@@ -1,11 +1,12 @@
-<% include ./partials/header %>
+<% include ../partials/header %>
 <% if (currentUser.team.id == null) { %>
     <h1 class="text-center padded-title">You aren't part of a team yet</h1>
     <hr style="width: 300px">
     <p class="text-center padded-text" >In order to be a coach you must be part of a team </p>
     <p class="text-center padded-text" >Join or create a team <a href="/team">here</a> </p>
 <% } else if (swimmers.length == 0) { %>
-    <p>There no swimmers</p>
+    <h1 class="text-center padded-title">No Swimmers</h1>
+    <p class="text-center padded-text">There no swimmers on this team</p>
 <% } else { %>
 <h1>Your Swimmers</h1>
     <ul>
@@ -14,4 +15,4 @@
         <% }) %>
     </ul>
 <% } %>
-<% include ./partials/footer %>
+<% include ../partials/footer %>

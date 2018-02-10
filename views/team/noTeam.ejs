@@ -1,6 +1,6 @@
-<% include ./partials/header %>
+<% include ../partials/header %>
 <% if (currentUser.coach) { %>
-    <h1 class="text-center padded-title">You aren't part of a team yet</h1>
+    <h1 class="text-center padded-title ">You aren't part of a team yet</h1>
     <p class="text-center padded-text">Ask another coach for your team code</p>
     <form action="/team/join" method="post">
         <div class="form-group" style="text-align:center">
@@ -9,7 +9,7 @@
         <button class="sqrbtn anmated-btn" style="margin-top: 20px; width: 300px; height: 50px;">Join Team</button>
     </form>
     <div class="text-center" style="margin-top: -30px;"><a href="/team/new" class="link-text link-colour" style="padding-right: 190px;">New Team</a></div>
-    <% include ./partials/footer %>
+    
 <% } else { %>
     <h1 class="text-center padded-title">You aren't part of a team yet</h1>
     <p class="text-center padded-text">Ask your coach for your team code</p>
@@ -20,3 +20,5 @@
         <button class="sqrbtn anmated-btn" style="margin-top: 20px; width: 300px; height: 50px;">Join Team</button>
     </form>
 <% } %>
+
+<% include ../partials/footer %>

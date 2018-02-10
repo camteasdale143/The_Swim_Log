@@ -1,0 +1,24 @@
+ <% include ../partials/header %>
+
+<h1 class="text-center padded-title"><%= currentUser.firstName %> <%= currentUser.lastName %></h1>
+<p class="text-center padded-text">
+    <% if (currentUser.coach) { %>
+        Coach
+    <% } else { %>
+       Swimmer
+    <% } %>
+</p>
+<hr class="small-hr">
+<form action="/account/leave" method="post">
+    <% if (team) { %>
+        <p class="text-center padded-text">Current Team: <%= team.name %></p>
+    <% } else { %>
+        <p class="text-center padded-text">You are not a part of a team yet</p>
+    <% } %>
+    <% if (currentUser.team.id != null) { %>
+        <button class="sqrbtn anmated-btn" style="width: 160px; height: 30px;background-color: #c0392b; margin-top: 10px">Leave Team</button>
+    <% } %>
+    
+</form>
+
+<% include ../partials/footer %>

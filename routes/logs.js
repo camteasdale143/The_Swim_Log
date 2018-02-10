@@ -11,13 +11,13 @@ router.get("/", middleware.isLoggedIn, (req,res) => {
     console.log(req.user.username)
     db.Log.find({author: {id: req.user._id, username: req.user.username}}).sort(dateSort)
     .then((allLogs) => {
-      res.render("index", {logs: allLogs})
+      res.render("logs/index", {logs: allLogs, page:"log"})
     })
   }
   else {
     db.User.find({team: {id: req.user.team.id}, coach: false})
     .then((foundSwimmers) => {
-      res.render("coach-player-index", {swimmers: foundSwimmers})
+      res.render("logs/coach-player-index", {swimmers: foundSwimmers, page:"log"})
     })
   }
 })
@@ -42,13 +42,13 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 
 
 router.get("/new", middleware.isLoggedIn, (req,res) => {
-    res.render("new")
+    res.render("logs/new", {page:"log"})
 })
 
 router.get("/:id", middleware.isLoggedIn, (req,res) => {
   db.Log.findById(req.params.id)
   .then((foundLog) => {
-    res.render("show", {log: foundLog})
+    res.render("logs/show", {log: foundLog})
   })
   .catch((err) => {
     console.log(err.message);
@@ -60,7 +60,7 @@ router.get("/:id", middleware.isLoggedIn, (req,res) => {
 router.get("/:id/edit", middleware.isLoggedIn, (req,res) => {
   db.Log.findById(req.params.id)
   .then((foundLog) => {
-    res.render("edit", {log: foundLog})
+    res.render("logs/edit", {log: foundLog})
   })
   .catch((err) => {
     console.log(err.message);

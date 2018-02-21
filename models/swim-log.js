@@ -18,5 +18,7 @@ var logSchema = new mongoose.Schema({
     }
 })
 
+logSchema.index({ comments: 'text', practice: 'text', food: 'text'});
+
 var Log = mongoose.model('Log', logSchema);
 module.exports = Log;

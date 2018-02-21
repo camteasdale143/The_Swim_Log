@@ -7,9 +7,7 @@ var middleware = require("../middleware/index")
 router.get("/", middleware.isLoggedIn, (req,res) => {
   if (!req.user.coach){
     var dateSort = { date: -1 };
-    console.log(req.user._id)
-    console.log(req.user.username)
-    db.Log.find({author: {id: req.user._id, username: req.user.username}}).sort(dateSort)
+    db.Log.find({author: {id: req.user._id, username: req.user.username}}).sort(dateSort).limit(15)
     .then((allLogs) => {
       res.render("logs/index", {logs: allLogs, page:"log"})
     })
@@ -20,6 +18,22 @@ router.get("/", middleware.isLoggedIn, (req,res) => {
       res.render("logs/coach-player-index", {swimmers: foundSwimmers, page:"log"})
     })
   }
+})
+
+router.get("/api/lazyLoadIndex/:i", (req, res) => {
+  var dateSort = { date: -1 };
+  db.Log.find({author: {id: req.user._id, username: req.user.username}}).sort(dateSort).skip(15 + req.params.i*3).limit(3)
+    .then((allLogs) => {
+      res.send(allLogs);
+    })
+})
+
+router.get("/api/searchLogs/:query", (req, res) => {
+  var dateSort = { date: -1 };
+  db.Log.find({author: {id: req.user._id, username: req.user.username}, $or: [{$text: {$search: req.params.query,}}, ]}).sort(dateSort).limit(15)
+    .then((allLogs) => {
+      res.send(allLogs);
+    })
 })
 
 router.post("/", middleware.isLoggedIn, (req, res) => {
@@ -43,6 +57,10 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 
 router.get("/new", middleware.isLoggedIn, (req,res) => {
     res.render("logs/new", {page:"log"})
+})
+
+router.get("/search", middleware.isLoggedIn, (req,res) => {
+    res.render("logs/searchLogs", {page:"log"})
 })
 
 router.get("/:id", middleware.isLoggedIn, (req,res) => {

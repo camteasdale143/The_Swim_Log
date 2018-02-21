@@ -4,14 +4,14 @@
     <div class="text-center" style="margin-top: 25px">
         <a href="/logs" class="log-icon-color animated-icon"><i class="fas fa-home log-icon" id="home-icon" style="color:#34495e;"></i></a>
         <a href="/logs/new" class="log-icon-color animated-icon"><i class="fas fa-plus log-icon" id="plus-icon"></i></a>
-        <a href="/logs" class="log-icon-color animated-icon"><i class="fas fa-search log-icon" id="search-icon"></i></a>
+        <a href="/logs/search" class="log-icon-color animated-icon"><i class="fas fa-search log-icon" id="search-icon"></i></a>
     </div>
     
     
     <h3 class="text-center page-header" style="padding-top: 20px">YOUR LOGS</h3>
     <hr class="hr-header">
     <!--<a href="/addCoach">New Coach</a>-->
-    <div class="row">
+    <div class="row" id="log-index">
         <% logs.forEach((log) => { %>
             <div class="col-md-4">
                 <a href="/logs/<%= log._id %>" style="text-decoration: none; color: black">
@@ -32,6 +32,7 @@
                             
                             <h5 class="card-title"><%= moment(log.date).format('LL') %></h5>
                             <h6 class="card-subtitle mb-2 text-muted">Created <%= moment.tz(log.created, "America/Toronto").format('LL') %></h6>
+                            <p class="card-subtitle mb-2 text-muted"><%= log.comments.substring(0, 100) %></p>
                         </div>
                     </div>
                 </a>
@@ -39,4 +40,4 @@
         <% }) %>
     </div>
 
-<% include ../partials/footer %>
+<% include ../partials/logIndexFooter %>

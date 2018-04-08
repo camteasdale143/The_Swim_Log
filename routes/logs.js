@@ -1,9 +1,13 @@
-var express=require("express");
-var router=express.Router();
-var db = require("../models/index");
-var middleware = require("../middleware/index")
+//DEPENDENCIES
+var express     =   require("express");
+var router      =   express.Router();
+var db          =   require("../models/index");
+var middleware  =   require("../middleware/index")
 
 
+
+//SHOW LOGS INDEX
+// if coach - show swimmer index
 router.get("/", middleware.isLoggedIn, (req,res) => {
   if (!req.user.coach){
     var dateSort = { date: -1 };
@@ -11,31 +15,56 @@ router.get("/", middleware.isLoggedIn, (req,res) => {
     .then((allLogs) => {
       res.render("logs/index", {logs: allLogs, page:"log"})
     })
+    .catch((err) => {
+        res.send(err.message)
+    })
   }
   else {
     db.User.find({team: {id: req.user.team.id}, coach: false})
     .then((foundSwimmers) => {
       res.render("logs/coach-player-index", {swimmers: foundSwimmers, page:"log"})
     })
+    .catch((err) => {
+        res.send(err.message)
+    })
   }
 })
 
+// API LAZY LOAD LOGS BASED ON DATE
 router.get("/api/lazyLoadIndex/:i", (req, res) => {
   var dateSort = { date: -1 };
   db.Log.find({author: {id: req.user._id, username: req.user.username}}).sort(dateSort).skip(15 + req.params.i*3).limit(3)
     .then((allLogs) => {
       res.send(allLogs);
     })
+    .catch((err) => {
+        res.send(err.message)
+    })
 })
 
+//SHOW LOG SEARCH
+router.get("/search", middleware.isLoggedIn, (req,res) => {
+    res.render("logs/searchLogs", {page:"log"})
+})
+
+// API SEARCH FOR USER LOGS
 router.get("/api/searchLogs/:query", (req, res) => {
   var dateSort = { date: -1 };
   db.Log.find({author: {id: req.user._id, username: req.user.username}, $or: [{$text: {$search: req.params.query,}}, ]}).sort(dateSort).limit(15)
     .then((allLogs) => {
       res.send(allLogs);
     })
+    .catch((err) => {
+        res.send(err.message)
+    })
 })
 
+//SHOW NEW LOG
+router.get("/new", middleware.isLoggedIn, (req,res) => {
+    res.render("logs/new", {page:"log"})
+})
+
+// CREATE NEW LOG
 router.post("/", middleware.isLoggedIn, (req, res) => {
     var newLog = {
         date: req.body.date,
@@ -52,17 +81,14 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
     .then((log) => {
         res.redirect("/logs");
     })
+    .catch((err) => {
+        res.send(err.message)
+    })
 })
 
 
-router.get("/new", middleware.isLoggedIn, (req,res) => {
-    res.render("logs/new", {page:"log"})
-})
 
-router.get("/search", middleware.isLoggedIn, (req,res) => {
-    res.render("logs/searchLogs", {page:"log"})
-})
-
+//SHOW SPECIFIC LOG
 router.get("/:id", middleware.isLoggedIn, (req,res) => {
   db.Log.findById(req.params.id)
   .then((foundLog) => {
@@ -75,6 +101,7 @@ router.get("/:id", middleware.isLoggedIn, (req,res) => {
   
 })
 
+//SHOW UPDATE LOG PAGE 
 router.get("/:id/edit", middleware.isLoggedIn, (req,res) => {
   db.Log.findById(req.params.id)
   .then((foundLog) => {
@@ -86,6 +113,7 @@ router.get("/:id/edit", middleware.isLoggedIn, (req,res) => {
   })
 })
 
+//UPDATE LOG
 router.put("/:id", middleware.isLoggedIn, (req, res) => {
   db.Log.findByIdAndUpdate(req.params.id, req.body.log)
   .then((updatedLog) => {
@@ -97,6 +125,7 @@ router.put("/:id", middleware.isLoggedIn, (req, res) => {
   })
 })
 
+//DELETE LOG
 router.delete("/:id", middleware.isLoggedIn, (req, res) => {
   db.Log.findByIdAndRemove(req.params.id)
   .then(() => {
@@ -109,4 +138,5 @@ router.delete("/:id", middleware.isLoggedIn, (req, res) => {
 })
 
 
+//EXPORT ROUTES
 module.exports = router;

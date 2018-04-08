@@ -1,13 +1,16 @@
-var express=require("express");
-var router=express.Router();
-var db = require("../models/index");
-var mongoose = require("mongoose");
-var middleware = require("../middleware/index")
+//DEPENDENCIES
+var express     =   require("express");
+var router      =   express.Router();
+var db          =   require("../models/index");
+var mongoose    =   require("mongoose");
+var middleware  =   require("../middleware/index")
 
+//SHOW NEW TEAM 
 router.get("/new", middleware.isLoggedIn, (req, res) => {
     res.render("team/newTeam", {page: "team"});
 })
 
+// CREATE NEW TEAM 
 router.post("/new", middleware.isLoggedIn, (req, res) => {
     var newTeam = {name: req.body.teamName, password: getTeamPassword(), members: [{id: req.user._id}], admin: {id: req.user._id}};
     db.Team.create(newTeam)
@@ -16,12 +19,17 @@ router.post("/new", middleware.isLoggedIn, (req, res) => {
         .then((updatedUser) => {
             res.redirect("/team");
         })
+        .catch((err) => {
+            res.send(err.message)
+        })
     })
     .catch((err) => {
-        console.log(err.message);
+        res.send(err.message)
     })
 })
 
+// CREATE RANDOM KEY FOR TEAM ACCESS
+// DUPLICATES ARE POSSIBLE!!!
 function getTeamPassword() {
   var password = "";
   for (var i = 0; i < 5; i++) {
@@ -31,9 +39,11 @@ function getTeamPassword() {
     }
     password += String.fromCharCode(random)
   }
+  
   return password
 }
 
+//SHOW TEAM MEMBERS OF A USER
 router.get("/", middleware.isLoggedIn, (req, res) => {
     if (req.user.team.id) {
         db.Team.findById(req.user.team.id)
@@ -48,11 +58,17 @@ router.get("/", middleware.isLoggedIn, (req, res) => {
                             res.render("team/team", {team: foundTeam, members: memberList});
                         }
                     })
+                    .catch((err) => {
+                        res.send(err.message)
+                    })
                 })
             }
             else {
                 res.redirect("back")
             }
+        })
+        .catch((err) => {
+            res.send(err.message)
         })
     }
     else {
@@ -60,10 +76,12 @@ router.get("/", middleware.isLoggedIn, (req, res) => {
     }
 })
 
+//SHOW JOIN TEAM PAGE
 router.get("/join", middleware.isLoggedIn, (req, res) => {
     res.render("team/noTeam", {page: "team"});
 })
 
+//USER JOIN TEAM
 router.post("/join", middleware.isLoggedIn, (req, res) => {
     db.Team.findOne({password: req.body.teamPassword})
     .then((foundTeam) => {
@@ -84,12 +102,15 @@ router.post("/join", middleware.isLoggedIn, (req, res) => {
                     foundTeam.save();
                     res.redirect("/team");
                 })
+                .catch((err) => {
+                    res.send(err.message)
+                })
             }
     })
     .catch((err) => {
-        console.log(err.message);
-        res.redirect("back")
+        res.send(err.message)
     })
 })
 
+//EXPORT ROUTER
 module.exports = router;

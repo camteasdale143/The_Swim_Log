@@ -29,12 +29,20 @@ body {
     color: #2ecc71;
 }
 
+.username-check:focus{
+    color: #ffcd02;
+}
+
 .username-taken:focus {
     color: #e74c3c;
 }
 
 .username-good {
     color: #2ecc71;
+}
+
+.username-check {
+    color: #ffcd02;
 }
 
 .username-taken {
@@ -214,4 +222,14 @@ body {
 
 .log-text {
     color: #7f7f7f;
+}
+
+
+.home-page-group-back {
+    background-color: #2b2b2b;
+    
+}
+
+.group-text {
+    color: white;
 }

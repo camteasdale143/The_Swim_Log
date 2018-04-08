@@ -1,9 +1,11 @@
-var express=require("express");
-var router=express.Router();
-var db = require("../models/index");
-var mongoose = require("mongoose");
-var middleware = require("../middleware/index")
+//DEPENDENCIES
+var express     =   require("express");
+var router      =   express.Router();
+var db          =   require("../models/index");
+var mongoose    =   require("mongoose");
+var middleware  =   require("../middleware/index")
 
+//UNUSED FILE CAN DELETE?
 router.get("/addCoach", middleware.isLoggedIn, (req, res) => {
     res.render("addCoach")
 })
@@ -42,8 +44,7 @@ router.post("/addCoach/:username", middleware.isLoggedIn, (req, res) => {
         }
     })
     .catch((err) => {
-        console.log(err.message);
-        res.redirect("back")
+        res.send(err.message)
     })
 })
 
@@ -57,10 +58,12 @@ router.get("/swimmer/:id/:username/logs", middleware.isLoggedIn, (req, res) => {
         .then((swimmer) => {
             res.render("coachIndex", {logs: logs, swimmer:swimmer});
         })
+        .catch((err) => {
+            res.send(err.message)
+        })
     })
     .catch((err) => {
-        console.log(err.message);
-        res.redirect("back")
+        res.send(err.message)
     })
 })
 
@@ -70,6 +73,9 @@ router.get("/api/coacheswithusername/:username", (req, res) => {
     db.User.find({ coach: true, $or: [{username: { $regex: req.params.username}}, {firstName: { $regex: /^req.params.username$/i}}, {lastName: { $regex: /^req.params.username$/i}} ] } ).limit(5)
     .then((foundUsers) => {
         res.send(foundUsers)
+    })
+    .catch((err) => {
+        res.send(err.message)
     })
 }) 
 

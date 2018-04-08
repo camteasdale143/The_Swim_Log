@@ -13,6 +13,7 @@
             var submitButton = $('#formButton');
             usernameForm.bind('input', function(){
                 var username = $("#username").val();
+                setCheckingUsername("Checking username availability")
                 if (username.length > 2) {
                     $.ajax({
                         method:"GET",
@@ -36,6 +37,7 @@
                 function setInvalidUsername(message) {
                     usernameForm.addClass("username-taken")
                     usernameForm.removeClass("username-good")
+                    usernameForm.removeClass("username-check")
                     usernameSub.html('<small class="username-taken">'+ message +'</small>')
                     submitButton.html('<button class="btn-block sqrbtn anmated-btn" style="height: 45px" disabled>Sign Up</button>');
                 }
@@ -43,8 +45,17 @@
                 function setValidUsername(message) {
                     usernameForm.addClass("username-good")
                     usernameForm.removeClass("username-taken")
+                    usernameForm.removeClass("username-check")
                     usernameSub.html('<small class="username-good">' + message + '</small>')
                     submitButton.html('<button class="btn-block sqrbtn anmated-btn" style="height: 45px">Sign Up</button>');
+                }
+                
+                function setCheckingUsername(message) {
+                    usernameForm.addClass("username-check")
+                    usernameForm.removeClass("username-good")
+                    usernameForm.removeClass("username-taken")
+                    usernameSub.html('<small class="username-check">'+ message +'</small>')
+                    submitButton.html('<button class="btn-block sqrbtn anmated-btn" style="height: 45px" disabled>Sign Up</button>');
                 }
             });
         });

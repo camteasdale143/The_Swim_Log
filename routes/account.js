@@ -1,14 +1,19 @@
-var express=require("express");
-var router=express.Router();
-var db = require("../models/index");
-var mongoose = require("mongoose");
-var middleware = require("../middleware/index")
+//DEPENDENCIES
+var express     =   require("express");
+var router      =   express.Router();
+var db          =   require("../models/index");
+var mongoose    =   require("mongoose");
+var middleware  =   require("../middleware/index")
 
+//SHOW USER ACCOUNT PAGE
 router.get("/", middleware.isLoggedIn, (req, res) => {
     if (req.user.team){
         db.Team.findById(req.user.team.id)
         .then((userTeam) => {
             res.render("misc/account", {team: userTeam, page:"account"})
+        })
+        .catch((err) => {
+            res.send(err.message)
         })
     }
     else {
@@ -16,6 +21,7 @@ router.get("/", middleware.isLoggedIn, (req, res) => {
     }
 })
 
+//LEAVE CURRENT TEAM
 router.post("/leave", (req, res) => {
     db.Team.findById(req.user.team.id)
     .then((foundTeam) => {
@@ -52,8 +58,11 @@ router.post("/leave", (req, res) => {
             }
         }
     })
+    .catch((err) => {
+        res.send(err.message)
+    })
 })
 
 
-
+//EXPORT ROUTES
 module.exports = router;

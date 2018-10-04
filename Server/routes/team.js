@@ -5,12 +5,12 @@ var db          =   require("../models/index");
 var mongoose    =   require("mongoose");
 var middleware  =   require("../middleware/index")
 
-//SHOW NEW TEAM 
+//SHOW NEW TEAM
 router.get("/new", middleware.isLoggedIn, (req, res) => {
     res.render("team/newTeam", {page: "team"});
 })
 
-// CREATE NEW TEAM 
+// CREATE NEW TEAM
 router.post("/new", middleware.isLoggedIn, (req, res) => {
     var newTeam = {name: req.body.teamName, password: getTeamPassword(), members: [{id: req.user._id}], admin: {id: req.user._id}};
     db.Team.create(newTeam)
@@ -39,7 +39,7 @@ function getTeamPassword() {
     }
     password += String.fromCharCode(random)
   }
-  
+
   return password
 }
 

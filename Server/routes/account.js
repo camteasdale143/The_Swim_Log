@@ -34,7 +34,6 @@ router.post("/leave", (req, res) => {
             }
             req.user.team = {id: null};
             req.user.save();
-            req.flash("success", "Successfully Logged Out");
             res.redirect("/team")
         }
         else {

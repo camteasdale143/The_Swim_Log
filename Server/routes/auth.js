@@ -6,7 +6,9 @@ var db = require("../models/index");
 
 //SHOW REGISTER PAGE
 router.get("/register", (req, res) => {
-    res.render("auth/register", {page:"register"});
+    res.status(200).json({
+      requestType: "get register page"
+    })
 });
 
 //CREATE NEW USER
@@ -23,7 +25,7 @@ router.post("/register", (req, res) => {
                 else {
                     passport.authenticate("local")(req, res, function(){
                     res.redirect("/logs");
-                    })  
+                    })
                 }
             })
         } else {
@@ -39,7 +41,9 @@ router.post("/register", (req, res) => {
 
 // SHOW LOGIN PAGE
 router.get("/login", (req, res) => {
-    res.render("auth/login", {page:"login"});
+  res.status(200).json({
+    requestType: "get login page"
+  })
 });
 
 // LOGIN USER
@@ -51,24 +55,29 @@ router.post("/login", passport.authenticate("local", {
 // LOGOUT USER
 router.get("/logout", (req, res) => {
     req.logout();
-    req.flash("success", "Successfully Logged Out");
     res.redirect("/")
 })
 
 // API CHECK IF USERNAME IS TAKEN (on login)
-router.get("/api/usernameTaken/:username", (req, res) => {
-    db.User.findOne({username: req.params.username})
-    .then((foundUser) => {
-        if (foundUser) {
-            res.send(true);
-        }
-        else {
-            res.send(false);
-        }
+router.get("/api/usernameTaken/:username", async (req, res, next) => {
+  try {
+    res.status(200).json({
+      requestType: 'check usernam availability',
+      usernameAvailable: await returnUsernameAvailability(res, req.params.username)
     })
-    .catch((err) => {
-        res.send(err.message)
-    })
-}) 
+  } catch (err) {
+    next(err);
+  }
+
+})
+
+async function returnUsernameAvailability(res, username) {
+  return (await getUser(username) === null)
+}
+
+
+async function getUser(username) {
+  return await db.User.findOne({username});
+}
 
 module.exports = router;

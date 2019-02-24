@@ -1,83 +1,129 @@
-//DEPENDENCIES
-var express=require("express");
-var router=express.Router();
-var passport= require("passport");
-var db = require("../models/index");
+// DEPENDENCIES
+const express = require('express');
 
-//SHOW REGISTER PAGE
-router.get("/register", (req, res) => {
-    res.status(200).json({
-      requestType: "get register page"
-    })
+const router = express.Router();
+const jwt = require('jsonwebtoken');
+const db = require('../models/index');
+
+router.post('/signin', async (req, res, next) => {
+  try {
+    console.log(req.body.email);
+    const user = await db.User.findOne({
+      email: req.body.email,
+    });
+    const {
+      _id, username, firstName, lastName, email, birthday,
+    } = user;
+    const isMatch = await user.comparePassword(req.body.password);
+    if (isMatch) {
+      const token = jwt.sign(
+        {
+          _id,
+          username,
+          firstName,
+          lastName,
+          email,
+          birthday,
+        },
+        process.env.SECRET_KEY,
+      );
+      return res.status(200).json({
+        _id,
+        username,
+        firstName,
+        lastName,
+        email,
+        birthday,
+        token,
+      });
+    }
+    return next({
+      status: 400,
+      message: 'Invalid Email/Password',
+    });
+  } catch (err) {
+    console.log(err);
+    return next({
+      status: 400,
+      message: 'Invalid Email/Password',
+    });
+  }
 });
 
-//CREATE NEW USER
-router.post("/register", (req, res) => {
-    var newUser = {username: req.body.username, firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email, coach: req.body.coach}
-    var userPassword = req.body.password
-    db.User.findOne({username: req.body.username})
-    .then((foundUsername) => {
-        if (!foundUsername){
-            db.User.register(newUser, userPassword, (err, user) => {
-                if (err) {
-                    console.log(err)
-                }
-                else {
-                    passport.authenticate("local")(req, res, function(){
-                    res.redirect("/logs");
-                    })
-                }
-            })
-        } else {
-            console.log("name taken")
-            res.redirect("back");
-        }
-    })
-    .catch((err) => {
-        res.send(err.message)
-    })
+router.post('/signup', async (req, res, next) => {
+  try {
+    console.log(req.body);
+    const {
+      username, password, firstName, lastName, email, birthday,
+    } = req.body;
+    console.log(`${username}, ${password}, ${firstName}, ${lastName}, ${email}, ${birthday}`);
+    if (!username || !password || !firstName || !lastName || !email || !birthday) {
+      return res.json({
+        fail: 'input all specified data',
+      });
+    }
+    req.body.birthday = Date.now();
+    const user = await db.User.create(req.body);
+    const { id } = user;
 
-})
-
-// SHOW LOGIN PAGE
-router.get("/login", (req, res) => {
-  res.status(200).json({
-    requestType: "get login page"
-  })
+    const token = jwt.sign(
+      {
+        id,
+        username,
+        firstName,
+        lastName,
+        email,
+        birthday,
+      },
+      process.env.SECRET_KEY,
+    );
+    return res.status(200).json({
+      id,
+      username,
+      password,
+      firstName,
+      lastName,
+      email,
+      birthday,
+      token,
+    });
+    // create user
+    // create jsonwebtoken
+    // process.env.SECRET_KEY
+  } catch (err) {
+    if (err.code === 11000) {
+      err.message = 'Sorry that username and/or email is taken';
+    }
+    return next({
+      status: 400,
+      message: err.message,
+    });
+    // what kind of error
+    // if it as certain kind of error response can be taken (username/password is taken)
+    // else send back 400 err
+  }
 });
 
 // LOGIN USER
-router.post("/login", passport.authenticate("local", {
-     successRedirect: "/logs",
-     failureRedirect: "/login"
-}))
 
 // LOGOUT USER
-router.get("/logout", (req, res) => {
-    req.logout();
-    res.redirect("/")
-})
 
 // API CHECK IF USERNAME IS TAKEN (on login)
-router.get("/api/usernameTaken/:username", async (req, res, next) => {
+async function getUser(username) {
+  return await db.User.findOne({ username });
+}
+async function returnUsernameAvailability(res, username) {
+  return (await getUser(username)) === null;
+}
+router.get('/api/usernameTaken/:username', async (req, res, next) => {
   try {
     res.status(200).json({
       requestType: 'check usernam availability',
-      usernameAvailable: await returnUsernameAvailability(res, req.params.username)
-    })
+      usernameAvailable: await returnUsernameAvailability(res, req.params.username),
+    });
   } catch (err) {
     next(err);
   }
-
-})
-
-async function returnUsernameAvailability(res, username) {
-  return (await getUser(username) === null)
-}
-
-
-async function getUser(username) {
-  return await db.User.findOne({username});
-}
+});
 
 module.exports = router;

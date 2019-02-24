@@ -1,19 +1,14 @@
 const mongoose = require('mongoose');
 
 const dataSchema = new mongoose.Schema({
-  date: Date,
-  created: {
-    type: Date,
-    default: Date.now(),
-  },
-  type: String,
-  value: String,
+  date: { type: Date, required: true },
+  created: { type: Date, default: Date.now(), required: true },
+  type: { type: String, required: true },
+  value: { type: String, required: true },
+  title: { type: String, required: true },
   author: {
-    // id: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'User',
-    // },
-    username: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
   },
 });
 

@@ -1,20 +1,30 @@
 // DEPENDENCIES
 const express = require('express');
 const middleware = require('../middleware/index');
+const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
 const {
-  getDataIndex, createNewIndex, returnSpecificData, deleteData,
+  getDataIndex,
+  createNewDatum,
+  getDatum,
+  deleteDatum,
+  getDataByTitle,
+  updateDatum,
+  getDataByDate,
 } = require('../helpers/data');
 
-router.get('/', getDataIndex);
+router.get('/', authMiddleware.loginRequired, getDataIndex);
+router.get('/title', authMiddleware.loginRequired, getDataByTitle);
+router.get('/log', authMiddleware.loginRequired, getDataByDate);
 
 // CREATE NEW DATUM
-router.post('/', createNewIndex);
+router.post('/', authMiddleware.loginRequired, createNewDatum);
+router.post('/update', authMiddleware.loginRequired, updateDatum);
 
 // SHOW SPECIFIC DATUM
-router.get('/:id', returnSpecificData);
+router.get('/:id', authMiddleware.loginRequired, getDatum);
 
 // UPDATE A GIVEN DATUM DOSEN"T WORKD RN
 router.put('/', async (req, res) => {
@@ -25,7 +35,7 @@ router.put('/', async (req, res) => {
 });
 
 // DELETE LOG
-router.delete('/', deleteData);
+router.delete('/', authMiddleware.loginRequired, deleteDatum);
 
 // EXPORT ROUTES
 module.exports = router;

@@ -4,39 +4,44 @@ import React, { Component } from 'react';
 import Header from './Header';
 import LogList from './logList.js';
 
-const logData = [
-  {
-    date: 'March 27',
-    sleep: 5,
-    water: 5,
-  },
-  {
-    date: 'March 26',
-    sleep: 5,
-    water: 5,
-  },
-  {
-    date: 'March 25',
-    sleep: 5,
-    water: 5,
-  }
-];
-
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: []
+    };
+  }
+  componentDidMount() {
+    fetch('http://localhost:8081/data')
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          data: res.data
+        });
+      });
+  }
+  renderLogList() {
+    if (this.state.data.length > 0) {
+      // prettier-ignore
+      return (<LogList logData={this.state.data} />);
+    } else {
+      console.log(this.state.data.length);
+      return null;
+    }
+  }
   render() {
+    console.log(this.state.data);
     return (
-      <div className="App" style={ styles.appStyles }>
-        <Header title="Log History" style={ styles.headerStyles }/>
-        <LogList logData={logData} />
+      <div className="App" style={styles.appStyles}>
+        <Header title="Log History" style={styles.headerStyles} />
+        {this.renderLogList()}
       </div>
     );
   }
 }
 
 const styles = {
-  appStyles: {
-
-  },
+  appStyles: {},
   headerStyles: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -44,6 +49,5 @@ const styles = {
     flexDirection: 'column'
   }
 };
-
 
 export default App;

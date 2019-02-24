@@ -8,22 +8,21 @@ class Loglist extends Component {
   }
 
   formatLogs() {
-    return this.props.logData.map((log) => (
-      <div style={styles.logStyles}>
-        <h3 style={styles.logTitleStyle}>{log.date}</h3>
-        <p style={styles.logTextStyle}>{log.sleep} Hours of sleep</p>
-        <p style={styles.logTextStyle}>{log.water} L of water</p>
+    return this.props.logData.map((data, idx) => (
+      <div style={styles.logStyles} key={idx}>
+        <h3 style={styles.logTitleStyle}>{data.type}</h3>
+        <p style={styles.logTextStyle}>{data.value} Hours of sleep</p>
+        <p style={styles.logTextStyle}>{data.created} L of water</p>
       </div>
     ));
   }
   render() {
-    const {
-      logListStyles,
-    } = styles;
+    console.log(this.props.logData);
+    const { logListStyles } = styles;
 
     const formattedLogs = this.formatLogs();
 
-    return(<div style={logListStyles}>{formattedLogs}</div>);
+    return <div style={logListStyles}>{formattedLogs}</div>;
   }
 }
 
@@ -35,18 +34,18 @@ const styles = {
     flexDirection: 'column'
   },
   logStyles: {
-    backgroundColor: colors.primaryDark ,
+    backgroundColor: colors.primaryDark,
     width: '75%',
     marginBottom: 10,
-    marginTop: 10,
+    marginTop: 10
   },
   logTitleStyle: {
     fontFamily: 'Titillium Web, sans-serif',
-    marginLeft: 10,
+    marginLeft: 10
   },
   logTextStyle: {
     fontFamily: 'Noto Serif, serif',
-    paddingLeft: 30,
+    paddingLeft: 30
   }
 };
 

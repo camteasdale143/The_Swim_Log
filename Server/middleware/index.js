@@ -1,13 +1,13 @@
-var db = require("../models/index");
-var middlewareOBJ = {};
+const db = require('../models/index');
 
-middlewareOBJ.isLoggedIn = function(req, res, next){
-     if(req.isAuthenticated()){
-          next();
-     }
-     else {
-          res.redirect("/login");
-     }
-}
+const middlewareOBJ = {};
+
+middlewareOBJ.isLoggedIn = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+};
 
 module.exports = middlewareOBJ;
